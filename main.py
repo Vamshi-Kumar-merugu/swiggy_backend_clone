@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import  CORSMiddleware
 from api.users import router as user_router
 from api.auth import router as auth_router
 from api.restaurants import router as restaurant_router
@@ -14,6 +15,16 @@ from api.admin_payouts import router as admin_payouts_router
 from api.tracking import router as tracking_router
 
 app = FastAPI(title="Swiggy_backend")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5500",
+        "http://127.0.0.1:5500"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(user_router)
 app.include_router(auth_router)
 app.include_router(restaurant_router)
